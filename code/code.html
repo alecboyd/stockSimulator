@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Stonks</h1>
+
+<p id="dayCounter"> Day 1 </p>
+
+<div id = "container">
+    <div id ="left" style = "float:left;">
+    	<p> Stock One:&nbsp</p>
+    </div>
+    <div id = "middle" style = "float:left;">
+		<p id="stockValue"> $100</p>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+
+<div id = "container">
+    <div id ="left" style = "float:left;">
+    	<button onclick="pauseBtn()"> <img  id = "pauseBtn" src = "pauseClicked.png" height="16" width="16"> </button>
+    </div>
+    <div id = "middle" style = "float:left;">
+		<button onclick="playBtn()"> <img id = "playBtn" src = "play.png" height="16" width="16"> </button>
+    </div>
+    <div id = "right" style = "float:left;">
+    	<button onclick="doublePlayBtn()"> <img id = "doublePlayBtn" src = "double.png" height="16" width="16"> </button>
+    </div>
+</div>
+
+<script>
+    var speed = 0
+    var goodBad = 0
+    var randomValue = 0
+    var stockValue = 100
+    var dayCounter = 1
+
+	function pauseBtn() {
+        speed = 0
+        document.getElementById("pauseBtn").src="pauseClicked.png"
+        document.getElementById("playBtn").src="play.png"
+        document.getElementById("doublePlayBtn").src="double.png"
+    }
+
+    function playBtn() {
+        speed = 1
+        document.getElementById("pauseBtn").src="pause.png"
+        document.getElementById("playBtn").src="playClicked.png"
+        document.getElementById("doublePlayBtn").src="double.png"
+    }
+
+    function doublePlayBtn() {
+        speed = 2
+        document.getElementById("pauseBtn").src="pause.png"
+        document.getElementById("playBtn").src="play.png"
+        document.getElementById("doublePlayBtn").src="doubleClicked.png"
+    }
+
+    function valueChange() {
+        randomValue = Math.floor((Math.random() * 100))
+        goodBad = Math.random()
+        if (goodBad >= .5) {
+            stockValue = Math.round(stockValue * (1 + (randomValue/1000)))
+        }
+        if (goodBad < .5) {
+            stockValue = Math.round(stockValue * (1 - (randomValue/1000)))
+        }
+        document.getElementById("stockValue").innerHTML = "$" + stockValue
+    }
+
+    function nextDay() {
+        dayCounter++
+        document.getElementById("dayCounter").innerHTML = "Day " + dayCounter
+        valueChange()
+    }
+
+    window.setInterval(function(){ 
+        if(speed == 1) {
+            nextDay()                             
+        }
+        if(speed == 2) {
+            nextDay()
+            setTimeout(nextDay, 500);             
+        }
+    },1000) 
+
+</script>
+
+</body>
+</html>
+
+
+<!--TO-DO LIST
+Done:
+-clickable button
+-thing you can buy to get more chungi (french class)
+-price increase the more french classes you have
+
+To do:
+-add a button to buy x10, x50, x100, or xMax (Idk how to make button color darker to indicate which one the player is on)
+-add leveling system for things like french class
+-CSS help plz
